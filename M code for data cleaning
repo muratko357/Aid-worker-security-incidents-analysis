@@ -1,0 +1,157 @@
+let
+    // Step 1: Import Raw Data
+    Source = Csv.Document(File.Contents("C:\Users\murat\Documents\Projects\AidWorkerySecurity\security_incidents_2024-11-22.csv"),[Delimiter=",", Columns=41, QuoteStyle=QuoteStyle.Csv]),
+    #"Promoted Headers" = Table.PromoteHeaders(#"Source", [PromoteAllScalars=true]),
+    #"Removed Top Rows" = Table.Skip(#"Promoted Headers",1),
+
+    // Step 2: Data Type Conversion
+    #"Changed Type" = Table.TransformColumnTypes(#"Removed Top Rows",{{"Day", Int64.Type}, {"Month", Int64.Type}, {"Year", Int64.Type}, {"Incident ID", Int64.Type}, {"UN", Int64.Type}, {"INGO", Int64.Type}, {"ICRC", Int64.Type}, {"NRCS and IFRC", Int64.Type}, {"NNGO", Int64.Type}, {"Other", Int64.Type}, {"Nationals killed", Int64.Type}, {"Nationals wounded", Int64.Type}, {"Nationals kidnapped", Int64.Type}, {"Total nationals", Int64.Type}, {"Internationals killed", Int64.Type}, {"Internationals wounded", Int64.Type}, {"Internationals kidnapped", Int64.Type}, {"Total internationals", Int64.Type}, {"Total killed", Int64.Type}, {"Total wounded", Int64.Type}, {"Total kidnapped", Int64.Type}, {"Total affected", Int64.Type}, {"Gender Male", Int64.Type}, {"Gender Female", Int64.Type}, {"Gender Unknown", Int64.Type}}),
+
+    // Step 3: Trim Text Columns for Consistency
+    #"Trimmed Text" = Table.TransformColumns(#"Changed Type", {
+        {"City", Text.Trim, type text}, {"District", Text.Trim, type text}, {"Region", Text.Trim, type text},
+        {"Country", Text.Trim, type text}, {"Actor name", Text.Trim, type text}, {"Source", Text.Trim, type text},
+        {"Location", Text.Trim, type text},
+        {"Attack context", Text.Trim, type text}
+    }),
+    // Step 4: Standardize Values in Columns
+    #"Standardized Countries" = Table.ReplaceValue(#"Trimmed Text", each [Country], 
+    each if [Country] = "Syrian Arab Republic" then "Syria" 
+    else if [Country] = "Occupied Palestinian Territories" then "Palestine"
+    else if [Country] = "Iran, Islamic Republic of" then "Iran"
+    else [Country], Replacer.ReplaceValue, {"Country"}),
+
+    #"Standardized Actor Names" = Table.ReplaceValue(#"Standardized Countries", each [Actor name], 
+    each if [Actor name] = "Unkown" then "Unknown"
+    else if [Actor name] = "Unknwon" then "Unknown"  
+    else if [Actor name] = "Uknown" then "Unknown"
+    else if [Actor name] =  "Non applicable" then "Not applicable"
+    else if [Actor name] = "Non applicable" then "Not applicable"
+    else if [Actor name] = "Israeli Defense Forces (IDF)" then "Israel Defense Forces (IDF)"
+    else if [Actor name] = "Israel Defense Forces" then "Israel Defense Forces (IDF)"
+    else if [Actor name] = "Criminals" then "Criminal"
+    else if [Actor name] = "Civilians" then "Civilian"
+    else if [Actor name] = "IDPs" then "IDP"
+    else if [Actor name] = "Community members" then "Community member"
+    else if [Actor name] = "Kachin Independence Army" then "Kachin Independence Army (KIA)"
+    else if [Actor name] = "Rapid Support Forces" then "Rapid Support Forces (RSF)"
+    else if [Actor name] = "Security guards" then "Security guard"
+    else if [Actor name] = "Al-Itihaad al-Islami" then "Al-Itihaad al-Islamiya"
+    else if [Actor name] = "Al-Ittihad al-Islami" then "Al-Ittihaad al-Islamiya"
+    else [Actor name], Replacer.ReplaceValue,{"Actor name"}),
+
+    #"Standardized Verified Values" = Table.ReplaceValue(#"Standardized Actor Names", each [Verified], 
+    each if [Verified] = "Pen" then "Pending"
+    else [Verified], Replacer.ReplaceValue,{"Verified"}),
+
+    #"Standardized Source Values" = Table.ReplaceValue(#"Standardized Verified Values", each [Source], 
+    each if [Source] = "Focal point" then "Focal Point"
+    else if [Source] = "media" then "Media"
+    else if [Source] = "Official report" then "Official Report"
+    else if [Source] = "Offiicial Report" then "Official Report"
+    else [Source], Replacer.ReplaceValue,{"Source"}),
+
+    // Step 5: Add a Date Column
+    #"Added Date Column" = Table.AddColumn(#"Standardized Source Values", "Date", 
+    each if [Year] = null or [Month] = null then null 
+    else #date([Year], [Month], if [Day] = null then 1 else [Day])),
+
+    // Step 6: Filter Out Rows with Missing Dates
+    #"Filtered Rows" = Table.SelectRows(#"Added Date Column", each [Date] <> null),
+
+    // Step 7: Add a DateKey Column for Joining
+    #"Added DateKey" = Table.AddColumn(#"Filtered Rows", "DateKey", each Date.Year([Date]) * 10000 + Date.Month([Date]) * 100 + Date.Day([Date])),
+
+    // Step 8: Merge with Geocoded Data to Fill Missing Lat/Lon
+    MergedLatLon = Table.NestedJoin(#"Added DateKey", {"Incident ID"}, CleanedLatLon, {"Incident ID"}, "CleanedLatLon", JoinKind.LeftOuter),
+    #"Expanded LatLon" = Table.ExpandTableColumn(MergedLatLon, "CleanedLatLon", {"Latitude", "Longitude", "Region2", "District2", "City2"}, {"Lat_Filled", "Lon_Filled", "Region2", "District2", "City2"}),
+
+   // Step 9: Fill Missing Lat/Lon
+    #"Added Final Lat" = Table.AddColumn(#"Expanded LatLon", "Final Lat", 
+    each if [Latitude] = null then [Lat_Filled] else [Latitude]),
+
+    #"Added Final Lon" = Table.AddColumn(#"Added Final Lat", "Final Lon", 
+    each if [Longitude] = null then [Lon_Filled] else [Longitude]),
+
+    // Step 10: Replace and Adjust Region Names
+
+    #"Added Final Region" = Table.AddColumn(#"Added Final Lon", "Final Region", each if ([Region] = null or [Region] = "") then [Region2] else [Region]),
+    
+    #"Standardized Region Names" = Table.ReplaceValue(#"Added Final Region", each [Final Region], 
+    each if [Incident ID] = 2216 then "Aleppo"
+    else if [Incident ID] = 2356 then "Hamah"
+    else if [Incident ID] = 3328 then "Idlib"
+    else if [Country] = "Israel" and ([District] = "Sha'ar HaNegev" or [District] = "Southern" or [District] = "Eshkol") then "HaDarom"
+    else if [Country] = "Palestine" and [Final Region] = "Judea and Samaria" then "West Bank"
+    else if [Country] = "Palestine" and [City2] = "Gaza" then "Gaza"
+    else if [Incident ID] = 3352 then "West Bank" 
+    else if [Incident ID] = 4086 then "Gaza"
+    else if [Incident ID] = 2421 then "Gaza" 
+    else if [Incident ID] = 4283 then "West Bank"
+    else [Final Region], Replacer.ReplaceValue, {"Final Region"}),
+
+    // Step 11: Additional Replacements for Region and City
+    #"Standardized Region Names2" = Table.ReplaceValue( #"Standardized Region Names", each [Final Region], 
+    each if [Final Region] = "Rural Damascus" then "Rif Dimashq"
+    else if [Final Region] = "Al-Hasaka" then "Al Hasakah"
+    else if [Final Region] = "Al-Hasakah" then "Al Hasakah"
+    else if [Final Region] = "Homs" then "Hims"
+    else if [Final Region] = "Homs Governorate" then "Hims"
+    else if [Final Region] = "Deir ez-Zor" then "Dayr Az Zawr"
+    else if [Final Region] = "Hama" then "Hamah"
+    else if [Final Region] = "Hama Governorate" then "Hamah"  
+    else if [Final Region] = "Ar-Raqqah" then "Ar Raqqah"
+    else if [Final Region] = "Raqqa" then "Ar Raqqah"
+    else if [Final Region] = "Daraa" then "Dar'a"
+    else if [Final Region] = "Idleb" then "Idlib"
+    else if [Final Region] = "Damascus Governorate" then "Damascus"
+    else if [Final Region] = "Latakia" then "Lattakia"    
+    else if [Final Region] = "Gaza Strip" then "Gaza"
+    else [Final Region], Replacer.ReplaceValue, {"Final Region"}),
+
+    #"Refined city2" = Table.ReplaceValue(#"Standardized Region Names2", each [City2], each if [Incident ID] = 2216 
+    then "Aleppo" else [City2], Replacer.ReplaceValue, {"City2"}),
+    
+    // Step 12: Correct Latitues
+    #"Refined Latitute" = Table.ReplaceValue(#"Refined city2", each [Final Lat], 
+    each if [Incident ID] = 2216 then 36.2021 
+    else if [Incident ID] = 2590 then 35.37 
+    else if [Incident ID] = 1699 then 33.541 
+    else if [Incident ID] = 3328 then 35.63 
+    else if [Incident ID] = 1939 then 36.289
+    else if [Incident ID] = 3739 then 34.47
+    else if [Incident ID] = 3774 then 6.56
+    else if [Incident ID] = 3954 then 31.529225223421967
+    else if [Incident ID] = 4033 then 31.502
+    else if [Incident ID] = 4046 then 31.505
+    else if [Incident ID] = 4047 then 31.5
+    else if [Incident ID] = 4072 then 31.51
+    else if [Incident ID] = 4150 then 31.31
+    else [Final Lat], Replacer.ReplaceValue, {"Final Lat"}),
+    
+    // Step 12: Correct Longitude
+    #"Refined Longitude" = Table.ReplaceValue(#"Refined Latitute", each [Final Lon], 
+    each if [Incident ID] = 2216 then 37.1343 
+    else if [Incident ID] = 2590 then 36.69 
+    else if [Incident ID] = 1699 then 35.396 
+    else if [Incident ID] = 3328 then 36.46 
+    else if [Incident ID] = 1939 then 36.719 
+    else if [Incident ID] = 2166 then 37.054
+    else if [Incident ID] = 2239 then 36.06 
+    else if [Incident ID] = 2232 then 37.12
+    else if [Incident ID] = 3739 then 69.12
+    else if [Incident ID] = 3774 then 32.69
+    else if [Incident ID] = 3954 then 34.46249785118469
+    else if [Incident ID] = 4033 then 34.44
+    else if [Incident ID] = 4046 then 34.451
+    else if [Incident ID] = 4047 then 34.45
+    else if [Incident ID] = 4072 then 34.441
+    else if [Incident ID] = 4150 then 34.24 
+    else [Final Lon], Replacer.ReplaceValue, {"Final Lon"}),
+
+    // Step 14: Final Cleanup
+    #"Removed Temp Columns" = Table.RemoveColumns(#"Refined Longitude",{"Lat_Filled", "Lon_Filled", "Latitude", "Longitude", "Region", "Region2"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Temp Columns", {{"Final Lat", "Latitude"}, {"Final Lon", "Longitude"}, {"Final Region", "Region"}}),
+    #"Sorted Rows" = Table.Sort(#"Renamed Columns",{{"Incident ID", Order.Descending}})
+in
+    #"Sorted Rows"
