@@ -1,0 +1,37 @@
+import pandas as pd
+from geopy.geocoders import Nominatim
+from geopy.extra.rate_limiter import RateLimiter
+
+# Initiate the Nominatim geocoder
+geolocator = Nominatim(user_agent="agent_geocoder_m")
+# Create a rate limiter
+reverse_geocode = RateLimiter(geolocator.reverse, min_delay_seconds=1)
+
+# Dictionary to cache geocoded results
+geocode_cache = {}
+
+# Add columns for Region, District, and City
+df['Region2'] = None
+df['District2'] = None
+df['City2'] = None
+
+# Iterate over each row in the DataFrame
+for index, row in df.iterrows():
+    # Create coordinate string
+    coords = f"{row['Latitude']}, {row['Longitude']}"
+    if coords not in geocode_cache:
+        # Use reverse geocoding to get the location details, specifying language
+        location = reverse_geocode(coords, language='en')  # Setting language here
+        if location:
+            address = location.raw.get('address', {})
+            geocode_cache[coords] = address
+        else:
+            geocode_cache[coords] = {"state": None, "county": None, "city": None}
+    # Extract from cache
+    address = geocode_cache[coords]
+    # Set the Region, District, and City based on the available address components
+    df.at[index, 'Region2'] = address.get('state', None)
+    df.at[index, 'District2'] = address.get('county', None)
+    df.at[index, 'City2'] = address.get('city', None)
+
+df.to_csv("/content/drive/MyDrive/Project NGO incidents/country_reversegeocode.csv", index=False)
