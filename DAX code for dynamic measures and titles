@@ -1,0 +1,148 @@
+Incident count = 
+VAR selectedOrg = SELECTEDVALUE('Bridge Table'[Organization], "All")
+VAR selectedCas = SELECTEDVALUE('Bridge Table'[Casualty], "All")
+
+RETURN
+SWITCH(
+    TRUE(),
+
+    // Combined Conditions: Organization and Casualty
+    selectedOrg = "ICRC" && selectedCas = "Killed", 
+        CALCULATE(COUNTROWS('Data'), 'Data'[ICRC] > 0, 'Data'[Total killed] > 0),
+    selectedOrg = "ICRC" && selectedCas = "Wounded", 
+        CALCULATE(COUNTROWS('Data'), 'Data'[ICRC] > 0, 'Data'[Total wounded] > 0),
+    selectedOrg = "ICRC" && selectedCas = "Kidnapped", 
+        CALCULATE(COUNTROWS('Data'), 'Data'[ICRC] > 0, 'Data'[Total kidnapped] > 0),
+
+    selectedOrg = "INGO" && selectedCas = "Killed", 
+        CALCULATE(COUNTROWS('Data'), 'Data'[INGO] > 0, 'Data'[Total killed] > 0),
+    selectedOrg = "INGO" && selectedCas = "Wounded", 
+        CALCULATE(COUNTROWS('Data'), 'Data'[INGO] > 0, 'Data'[Total wounded] > 0),
+    selectedOrg = "INGO" && selectedCas = "Kidnapped", 
+        CALCULATE(COUNTROWS('Data'), 'Data'[INGO] > 0, 'Data'[Total kidnapped] > 0),
+
+    selectedOrg = "NNGO" && selectedCas = "Killed", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[NNGO] > 0, 'Data'[Total killed] > 0),     
+    selectedOrg = "NNGO" && selectedCas = "Wounded", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[NNGO] > 0, 'Data'[Total wounded] > 0),
+    selectedOrg = "NNGO" && selectedCas = "Kidnapped", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[NNGO] > 0, 'Data'[Total kidnapped] > 0),
+    
+    selectedOrg = "NRCS and IFRC" && selectedCas = "Killed", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[NRCS and IFRC] > 0, 'Data'[Total killed] > 0),
+    selectedOrg = "NRCS and IFRC" && selectedCas = "Wounded", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[NRCS and IFRC] > 0, 'Data'[Total wounded] > 0),
+    selectedOrg = "NRCS and IFRC" && selectedCas = "Kidnapped", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[NRCS and IFRC] > 0, 'Data'[Total kidnapped] > 0),
+
+    selectedOrg = "UN" && selectedCas = "Killed", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[UN] > 0, 'Data'[Total killed] > 0), 
+    selectedOrg = "UN" && selectedCas = "Wounded", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[UN] > 0, 'Data'[Total wounded] > 0), 
+    selectedOrg = "UN" && selectedCas = "Kidnapped", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[UN] > 0, 'Data'[Total kidnapped] > 0),
+
+    selectedOrg = "Other" && selectedCas = "Killed", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[Other] > 0, 'Data'[Total killed] > 0), 
+    selectedOrg = "Other" && selectedCas = "Wounded", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[Other] > 0, 'Data'[Total wounded] > 0), 
+    selectedOrg = "Other" && selectedCas = "Kidnapped", 
+         CALCULATE(COUNTROWS('Data'), 'Data'[Other] > 0, 'Data'[Total kidnapped] > 0), 
+
+    // Organization-only Conditions
+    selectedOrg = "ICRC", CALCULATE(COUNTROWS('Data'), 'Data'[ICRC] > 0),
+    selectedOrg = "INGO", CALCULATE(COUNTROWS('Data'), 'Data'[INGO] > 0),
+    selectedOrg = "NNGO", CALCULATE(COUNTROWS('Data'), 'Data'[NNGO] > 0),
+    selectedOrg = "NRCS and IFRC", CALCULATE(COUNTROWS('Data'), 'Data'[NRCS and IFRC] > 0),
+    selectedOrg = "UN", CALCULATE(COUNTROWS('Data'), 'Data'[UN] > 0),
+    selectedOrg = "Other", CALCULATE(COUNTROWS('Data'), 'Data'[Other] > 0),
+
+    // Casualty-only Conditions
+    selectedCas = "Killed", CALCULATE(COUNTROWS('Data'), 'Data'[Total killed] > 0),
+    selectedCas = "Wounded", CALCULATE(COUNTROWS('Data'), 'Data'[Total wounded] > 0),
+    selectedCas = "Kidnapped", CALCULATE(COUNTROWS('Data'), 'Data'[Total kidnapped] > 0),
+
+    // Default case to handle any unaddressed combinations
+    COUNTROWS('Data')
+)
+
+
+
+Victim count = 
+VAR selectedOrg = SELECTEDVALUE('Bridge Table'[Organization], "All")
+VAR selectedCas = SELECTEDVALUE('Bridge Table'[Casualty], "All")
+
+RETURN
+SWITCH(
+    TRUE(),
+    
+    // Combined Conditions: Organization and Casualty
+    selectedOrg = "ICRC" && selectedCas = "Killed", 
+        CALCULATE(SUM('Data'[Total killed]), 'Data'[ICRC] > 0), 
+    selectedOrg = "ICRC" && selectedCas = "Wounded", 
+        CALCULATE(SUM('Data'[Total wounded]), 'Data'[ICRC] > 0), 
+    selectedOrg = "ICRC" && selectedCas = "Kidnapped", 
+        CALCULATE(SUM('Data'[Total kidnapped]), 'Data'[ICRC] > 0), 
+        
+    selectedOrg = "INGO" && selectedCas = "Killed", 
+        CALCULATE(SUM('Data'[Total killed]), 'Data'[INGO] > 0), 
+    selectedOrg = "INGO" && selectedCas = "Wounded", 
+        CALCULATE(SUM('Data'[Total wounded]), 'Data'[INGO] > 0), 
+    selectedOrg = "INGO" && selectedCas = "Kidnapped", 
+        CALCULATE(SUM('Data'[Total kidnapped]), 'Data'[INGO] > 0), 
+
+    selectedOrg = "NNGO" && selectedCas = "Killed", 
+        CALCULATE(SUM('Data'[Total killed]), 'Data'[NNGO] > 0),     
+    selectedOrg = "NNGO" && selectedCas = "Wounded", 
+        CALCULATE(SUM('Data'[Total wounded]), 'Data'[NNGO] > 0), 
+    selectedOrg = "NNGO" && selectedCas = "Kidnapped", 
+        CALCULATE(SUM('Data'[Total kidnapped]), 'Data'[NNGO] > 0), 
+    
+    selectedOrg = "NRCS and IFRC" && selectedCas = "Killed", 
+        CALCULATE(SUM('Data'[Total killed]), 'Data'[NRCS and IFRC] > 0),
+    selectedOrg = "NRCS and IFRC" && selectedCas = "Wounded", 
+        CALCULATE(SUM('Data'[Total wounded]), 'Data'[NRCS and IFRC] > 0), 
+    selectedOrg = "NRCS and IFRC" && selectedCas = "Kidnapped", 
+        CALCULATE(SUM('Data'[Total kidnapped]), 'Data'[NRCS and IFRC] > 0), 
+
+    selectedOrg = "UN" && selectedCas = "Killed", 
+        CALCULATE(SUM('Data'[Total killed]), 'Data'[UN] > 0), 
+    selectedOrg = "UN" && selectedCas = "Wounded", 
+        CALCULATE(SUM('Data'[Total wounded]), 'Data'[UN] > 0), 
+    selectedOrg = "UN" && selectedCas = "Kidnapped", 
+        CALCULATE(SUM('Data'[Total kidnapped]), 'Data'[UN] > 0),  
+
+    selectedOrg = "Other" && selectedCas = "Killed", 
+        CALCULATE(SUM('Data'[Total killed]), 'Data'[Other] > 0), 
+    selectedOrg = "Other" && selectedCas = "Wounded", 
+        CALCULATE(SUM('Data'[Total wounded]), 'Data'[Other] > 0), 
+    selectedOrg = "Other" && selectedCas = "Kidnapped", 
+        CALCULATE(SUM('Data'[Total kidnapped]), 'Data'[Other] > 0), 
+
+    // Organization-only Conditions
+    selectedOrg = "ICRC", CALCULATE(SUM('Data'[ICRC])),
+    selectedOrg = "INGO", CALCULATE(SUM('Data'[INGO])),
+    selectedOrg = "NNGO", CALCULATE(SUM('Data'[NNGO])),
+    selectedOrg = "NRCS and IFRC", CALCULATE(SUM('Data'[NRCS and IFRC])),
+    selectedOrg = "UN", CALCULATE(SUM('Data'[UN])),
+    selectedOrg = "Other", CALCULATE(SUM('Data'[Other])),
+
+    // Casualty-only Conditions
+    selectedCas = "Killed", CALCULATE(SUM('Data'[Total killed])),
+    selectedCas = "Wounded", CALCULATE(SUM('Data'[Total wounded])),
+    selectedCas = "Kidnapped", CALCULATE(SUM('Data'[Total kidnapped])),
+
+    // Default case to handle any unaddressed combinations
+    CALCULATE(SUM('Data'[Total affected]))
+)
+
+
+Dynamic Map Title = 
+VAR SelectedVictimType = SELECTEDVALUE('Data'[IsVictim International], "International & National")
+VAR SelectedCountry = SELECTEDVALUE('Data'[Country], "All Countries")
+VAR SelectedOrganization = SELECTEDVALUE('Bridge table'[Organization], "All Organizations")
+RETURN
+"Victim Count of " &
+SelectedVictimType & " Aid Workers " &
+"in " & SelectedCountry & 
+", involving " & SelectedOrganization
