@@ -10,6 +10,10 @@ The aim of this Power BI project is to analyze security incidents involving huma
 security_incidents_2024-11-22.csv, sourced from the Aid Worker Security Database, includes detailed records of incidents, victim counts, and organizational affiliations.
 -	Geographic Data:
 Shapefiles for Israel, Palestine, Lebanon, and Syria were downloaded from GADM, standardized, merged, and converted into the TopoJSON format for Power BI integration.
+### DAX Measures:
+-	Victim Count: Total victims by type.
+-	Incident Count: Total incidents by type.
+-	Dynamic Map Title: Adapts titles based on slicer selections.
 ________________________________________
 ## 2. Data Model
 ### Primary Table:
@@ -99,8 +103,6 @@ ________________________________________
 -	Includes M code for handling missing data, name standardization, and auxiliary table joins.
 ### Python Reverse Geocoding:
 -	Extracted missing Region/Province names based on latitude and longitude. Saved results as a CSV for integration into Power BI.
-### DAX Measure List:
--	Victim Count: Total victims by type.
--	Incident Count: Total incidents by type.
--	Dynamic Map Title: Adapts titles based on slicer selections.
+### QGIS Map Visualisation:
+- Offers additional insights into security incidents affecting humanitarian aid workers (killed, kidnapped, or wounded), analyzed by 'means of attack' and 'functional location' within regions of the East Mediterranean humanitarian corridor. 
 
