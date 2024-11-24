@@ -12,10 +12,13 @@ This Power BI project aims to analyze security incidents involving humanitarian 
 1.	Global Overview (1997–2024): Visualizes global trends using heatmaps and aggregated victim counts.
 2.	East Mediterranean Humanitarian Corridor (2012–2024): Delivers detailed insights into provincial-level incidents using custom maps.
 ### Data Sources:
--	Primary Dataset:
-security_incidents_2024-11-22.csv, sourced from the Aid Worker Security Database, includes detailed records of incidents, victim counts, and organizational affiliations.
--	Geographic Data:
+
+**Primary Dataset:**
+_security_incidents_2024-11-22.csv_ contains detailed records of security incidents, including victim counts and organizational affiliations. The data is sourced from Humanitarian Outcomes' Aid Worker Security Database (aidworkersecurity.org).
+
+**Geographic Data:**
 Shapefiles for Israel, Palestine, Lebanon, and Syria were downloaded from GADM, standardized, merged, and converted into the TopoJSON format for Power BI integration.
+
 ### DAX Measures:
 -	Victim Count: Total victims by type.
 -	Incident Count: Total incidents by type.
@@ -113,12 +116,11 @@ Streamline DAX measures and SWITCH statements.
 Add filters for Actor Type, Actor Name, and Actor Motive.
 ________________________________________
 ## 8. Appendix
-### Power Query Transformation Code:
--	Includes M code for handling missing data, name standardization, and auxiliary table joins.
-### Python Reverse Geocoding:
--	Extracted missing Region/Province names based on latitude and longitude. Saved results as a CSV for integration into Power BI.
-### QGIS Map Visualisation:
-- Offers additional insights into security incidents affecting humanitarian aid workers (killed, kidnapped, or wounded), analyzed by 'means of attack' and 'functional location' within regions of the East Mediterranean humanitarian corridor. 
+-	M code for handling missing data, name standardization, and auxiliary table joins
+- DAX code for dynamic measures and visualization titles
+- Python code for reverse geocoding
+- Aid worker security database codebook, published by Humanitarian Outcomes in 2021
+- QGIS map visualization (Aid Worker Security Incidents - East Mediterranean Humanitarian Corridor 2024), offering additional insights into security incidents affecting humanitarian aid workers (killed, kidnapped, or wounded), analyzed by 'means of attack' and 'functional location' within provinces
 
 
 _Note: The data points indicating incident locations are approximate rather than exact, due to the imputation of missing values in the latitude and longitude columns._
