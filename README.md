@@ -49,7 +49,7 @@ ________________________________________
 ### Page 2: Regional Analysis
 -	Features a custom shape map along with a bubble map for provincial-level insights within the East Mediterranean Humanitarian Corridor.
 ### Creation Process:
-1.	Standardized shapefiles for individual countries using QGIS, MapShaper, and GeoPandas.
+1.	Standardized shapefiles for individual countries using QGIS and MapShaper.
 2.	Merged shapefiles into a single dataset and converted to TopoJSON format.
 3.	Standardized province names to ensure alignment with incident data.
 ### Challenges:
