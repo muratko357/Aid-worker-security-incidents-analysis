@@ -120,3 +120,5 @@ ________________________________________
 ### QGIS Map Visualisation:
 - Offers additional insights into security incidents affecting humanitarian aid workers (killed, kidnapped, or wounded), analyzed by 'means of attack' and 'functional location' within regions of the East Mediterranean humanitarian corridor. 
 
+
+_Note: The data points indicating incident locations are approximate rather than exact, due to the imputation of missing values in the latitude and longitude columns._
