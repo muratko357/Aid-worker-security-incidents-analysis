@@ -1,7 +1,7 @@
 # Project Documentation: Security Incident Analysis Dashboard in Power BI
 ## 1. Project Overview
-### Objective:
-The aim of this Power BI project is to analyze security incidents involving humanitarian aid workers, providing actionable insights into incident patterns, victim demographics, and organizational involvement. By integrating advanced data modeling, geospatial analysis, and dynamic interactivity, the dashboard aids strategic and operational decision-making for security managers and analysts.
+
+This Power BI project aims to analyze security incidents involving humanitarian aid workers, delivering actionable insights into incident patterns, victim demographics, and organizational involvement. Leveraging advanced data modeling, geospatial analysis, and interactive dashboards, the project empowers security managers and analysts in the humanitarian sector to make informed strategic and operational decisions.
 
 <img align="left" width="400" height="225"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Aid workers security incidents global overview.png"/> 
 <img align="left" width="400" height="225"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Aid workers security incidents EM view.png"/> 
