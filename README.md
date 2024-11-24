@@ -2,6 +2,12 @@
 ## 1. Project Overview
 ### Objective:
 The aim of this Power BI project is to analyze security incidents involving humanitarian aid workers, providing actionable insights into incident patterns, victim demographics, and organizational involvement. By integrating advanced data modeling, geospatial analysis, and dynamic interactivity, the dashboard aids strategic and operational decision-making for security managers and analysts.
+
+<img align="left" width="400" height="225"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Aid workers security incidents global overview.png"/> 
+<img align="left" width="400" height="225"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Aid workers security incidents EM view.png"/> 
+
+<br clear="left"/>
+
 ### Interactive Pages:
 1.	Global Overview (1997–2024): Visualizes global trends using heatmaps and aggregated victim counts.
 2.	East Mediterranean Humanitarian Corridor (2012–2024): Delivers detailed insights into provincial-level incidents using custom maps.
@@ -28,11 +34,11 @@ Key Columns:
 -	Details Text for incident descriptions
 ### Dimension Tables:
 #### Organization: 
-- Lists unique organization names for filtering incidents by humanitarian agencies.
+- Lists unique organization names for filtering incidents by humanitarian agencies and actors.
 #### Type Casualty: 
 - Represents casualty types (Killed, Wounded, Kidnapped) for cross-filtering.
 #### Bridge Table:
-- Links the primary table to dimension tables using composite keys (Incident ID, Organization ID, and Casualty Type). Enables accurate cross-filtering.
+- Links the primary table to dimension tables using composite keys (Incident ID, Organization ID, and Casualty ID). Enables accurate cross-filtering.
 #### Calendar Table:
 - Supports temporal analysis with calculated fields for Year, Month, and Week Number.
 ________________________________________
@@ -41,7 +47,7 @@ ________________________________________
 -	Utilizes Power BI's Bing Maps to plot incidents globally.
 -	Data Points: Locations identified by latitude and longitude, with bubble size and color representing victim counts.
 ### Page 2: Regional Analysis
--	Features a custom shape map for provincial-level insights within the East Mediterranean Humanitarian Corridor.
+-	Features a custom shape map along with a bubble map for provincial-level insights within the East Mediterranean Humanitarian Corridor.
 ### Creation Process:
 1.	Standardized shapefiles for individual countries using QGIS, MapShaper, and GeoPandas.
 2.	Merged shapefiles into a single dataset and converted to TopoJSON format.
@@ -76,14 +82,22 @@ ________________________________________
 ## 5. Relationships and Cross-Filtering
 ### Bridge Table Role:
 Addresses many-to-many relationships between organizations and casualty types, allowing mutual cross-filtering across dimension tables.
-#### Configuration:
-- Relationships:
-  - Bridge Table → Organization (Many-to-One)
-  - Bridge Table → Type Casualty (Many-to-One)
-  -	Bridge Table ↔ Data Table (Both Directions)
--	Filter Direction:
-    - Single-direction filters for dimension tables; bidirectional filters between the Bridge Table and Data Table for seamless slicer functionality.
-________________________________________
+
+<img align="left" width="400" height="300"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Data model.png"/> 
+
+### Configuration:
+#### Relationships:
+   - Bridge Table → Organization (Many-to-One)
+   - Bridge Table → Type Casualty (Many-to-One)
+   -	Bridge Table ↔ Data Table (Both Directions)
+
+ #### Filter Direction:
+   - Single-direction filters for dimension tables; bidirectional filters between the Bridge Table and Data Table for seamless slicer functionality.
+
+ <br clear="left"/>
+
+---
+
 ## 6. Assumptions & Limitations
 ### Assumptions:
 1.	Incident IDs in the primary table are unique.
