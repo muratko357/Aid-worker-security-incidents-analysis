@@ -1,16 +1,21 @@
-# Project Documentation: Security Incident Analysis Dashboard in Power BI
-## 1. Project Overview
+# Project Documentation: Security Incident Analysis with Power BI Dashboard and QGIS Map Visualization
+## Project Overview
 
-This Power BI project aims to analyze security incidents involving humanitarian aid workers, delivering actionable insights into incident patterns, victim demographics, and organizational involvement. Leveraging advanced data modeling, geospatial analysis, and interactive dashboards, the project empowers security managers and analysts in the humanitarian sector to make informed strategic and operational decisions.
+This project aims to analyze security incidents involving humanitarian aid workers, delivering actionable insights into incident patterns, victim demographics, and organizational involvement. Leveraging advanced data modeling, geospatial analysis, and interactive dashboards, the project empowers security managers and analysts in the humanitarian sector to make informed strategic and operational decisions. The products involve a Power BI dashboard with 2 pages and a QGIS map visualization (pdf). 
 
-<img align="left" width="400" height="225"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents global overview.png"/> 
-<img align="left" width="400" height="225"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents EM view.png"/> 
+<img align="left" width="600" height="338"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents global overview.png"/> 
 
+<br/>
+
+<img align="left" width="600" height="338"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents EM view.png"/> 
+<br clear="left"/>
+<small style="color:gray; font-size: 0.8em;">Screenshots: Power BI dashboard pages: global overview and region view</small>
 <br clear="left"/>
 
-### Interactive Pages:
+### Interactive Pages in Power BI Dashboard:
 1.	Global Overview (1997–2024): Visualizes global trends using heatmaps and aggregated victim counts.
 2.	East Mediterranean Humanitarian Corridor (2012–2024): Delivers detailed insights into provincial-level incidents using custom maps.
+
 ### Data Sources:
 
 **Primary Dataset:**
@@ -46,15 +51,26 @@ Key Columns:
 - Supports temporal analysis with calculated fields for Year, Month, and Week Number.
 ________________________________________
 ## 3. Maps
-### Page 1: Global Heatmap
--	Utilizes Power BI's Bing Maps to plot incidents globally.
--	Data Points: Locations identified by latitude and longitude, with bubble size and color representing victim counts.
-### Page 2: Regional Analysis
--	Features a custom shape map along with a bubble map for provincial-level insights within the East Mediterranean Humanitarian Corridor.
+### Power BI Maps for Global and Reginal Analyses
+-	Utilizes Power BI's Bing Maps and a custom shape map created for provincial-level insights within the East Mediterranean Humanitarian Corridor.
+-	Data points for bubble maps are locations identified by latitude and longitude, with bubble size and color representing victim counts. The regional shape map is also colored by victim counts.
+### QGIS Map Visualisation for Regional Analysis
+-	Utilizes the shape map for both country and provincial-level insights within the East Mediterranean Humanitarian Corridor.
+-	Data points in the shape map are locations identified by latitude and longitude, with symbols representing attack types.
+
+<img align="left" width="600" height="424"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Appendix/QGIS Map East Mediterranean Humanitarian Corridor.png"/> 
+<br clear="left"/>
+<small style="color:gray; font-size: 0.8em;">Screenshot: QGIS Map visualization</small>
+<br clear="left"/>
+
 ### Creation Process:
-1.	Standardized shapefiles for individual countries using QGIS and MapShaper.
-2.	Merged shapefiles into a single dataset and converted to TopoJSON format.
-3.	Standardized province names to ensure alignment with incident data.
+1.	Standardized shapefiles for individual countries using QGIS. 
+2. Merged shapefiles into a single dataset. 
+3. Converted the merged shapefile to TopoJSON format using MapShaper for the Power BI dashboard.
+4. Standardized province names to ensure alignment with incident data.
+5.	Merged the final shapefile with the incidents dataset using QGIS.
+6.	Created symbols to represent data points and adjusted the map for the print layout in QGIS.
+
 ### Challenges:
 -	Name Standardization: Manual adjustments were required for inconsistent naming (e.g., "Ar-Raqqah" vs. "Ar Raqqah").
 -	Projection Compatibility: Re-projected shapefiles to EPSG:4326 (WGS 84) for consistent integration.
