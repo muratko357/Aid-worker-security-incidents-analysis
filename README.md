@@ -20,7 +20,7 @@ This project focuses on analyzing security incidents affecting humanitarian aid 
 _security_incidents_2024-11-22.csv_ contains detailed records of security incidents, including victim counts and organizational affiliations. The data is sourced from Humanitarian Outcomes' Aid Worker Security Database (aidworkersecurity.org).
 
 **Geographic Data:**
-Shapefiles for Israel, Palestine, Lebanon, and Syria were downloaded from GADM, standardized, merged, and converted into the TopoJSON format for Power BI integration.
+Shapefiles for Israel, Palestine, Lebanon, and Syria were downloaded from GADM (gadm.org), standardized, merged, and converted into the TopoJSON format for Power BI integration.
 
 ### DAX Measures:
 -	Victim Count: Total victims by type.
