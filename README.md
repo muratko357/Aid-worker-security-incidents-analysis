@@ -79,7 +79,7 @@ Key Columns:
 6.	Created symbols to represent data points and adjusted the map for the print layout in QGIS.
 
 ### Challenges:
--	Name Standardization: Manual adjustments were required to address inconsistencies (e.g., 'Ar-Raqqah' vs. 'Ar Raqqah'), ensuring accurate matching with the dataset.
+-	Name Standardization: Manual adjustments were required to address inconsistencies (e.g., "Deir ez-Zor" → "Dayr Az Zawr"), ensuring accurate matching with the dataset.
 -	Projection Compatibility: Re-projected shapefiles to EPSG:4326 (WGS 84) for consistent integration.
 
 ---
