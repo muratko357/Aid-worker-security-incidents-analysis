@@ -9,7 +9,7 @@ This project aims to analyze security incidents involving humanitarian aid worke
 
 <img align="left" width="600" height="338"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents EM view.png"/> 
 <br clear="left"/>
-<small style="color:gray; font-size: 0.8em;">Screenshots: Power BI dashboard pages: global overview and region view</small>
+<small style="color:gray; font-size: 0.8em;"><em>Screenshots: Power BI dashboard pages: global overview and region view</em></small>
 <br clear="left"/>
 
 ### Interactive Pages in Power BI Dashboard:
@@ -28,8 +28,11 @@ Shapefiles for Israel, Palestine, Lebanon, and Syria were downloaded from GADM, 
 -	Victim Count: Total victims by type.
 -	Incident Count: Total incidents by type.
 -	Dynamic Map Title: Adapts titles based on slicer selections.
-________________________________________
+
+---
+
 ## 2. Data Model
+
 ### Primary Table:
 Name: security_incidents_2024-11-22
 Key Columns:
@@ -40,7 +43,9 @@ Key Columns:
 -	Geographic Details (Country, Region/Province, City)
 -	Latitude/Longitude
 -	Details Text for incident descriptions
+
 ### Dimension Tables:
+
 #### Organization: 
 - Lists unique organization names for filtering incidents by humanitarian agencies and actors.
 #### Type Casualty: 
@@ -49,18 +54,22 @@ Key Columns:
 - Links the primary table to dimension tables using composite keys (Incident ID, Organization ID, and Casualty ID). Enables accurate cross-filtering.
 #### Calendar Table:
 - Supports temporal analysis with calculated fields for Year, Month, and Week Number.
-________________________________________
+
+---
+
 ## 3. Maps
+
 ### Power BI Maps for Global and Reginal Analyses
 -	Utilizes Power BI's Bing Maps and a custom shape map created for provincial-level insights within the East Mediterranean Humanitarian Corridor.
 -	Data points for bubble maps are locations identified by latitude and longitude, with bubble size and color representing victim counts. The regional shape map is also colored by victim counts.
+
 ### QGIS Map Visualisation for Regional Analysis
 -	Utilizes the shape map for both country and provincial-level insights within the East Mediterranean Humanitarian Corridor.
 -	Data points in the shape map are locations identified by latitude and longitude, with symbols representing attack types.
 
-<img align="left" width="600" height="424"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Appendix/QGIS Map East Mediterranean Humanitarian Corridor.png"/> 
+<img align="left" width="600" height="424"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/QGIS Map-East Mediterranean Humanitarian Corridor.png"/> 
 <br clear="left"/>
-<small style="color:gray; font-size: 0.8em;">Screenshot: QGIS Map visualization</small>
+<small style="color:gray; font-size: 0.8em;"><em>Screenshot: QGIS Map visualization</em></small>
 <br clear="left"/>
 
 ### Creation Process:
@@ -74,8 +83,11 @@ ________________________________________
 ### Challenges:
 -	Name Standardization: Manual adjustments were required for inconsistent naming (e.g., "Ar-Raqqah" vs. "Ar Raqqah").
 -	Projection Compatibility: Re-projected shapefiles to EPSG:4326 (WGS 84) for consistent integration.
-________________________________________
-## 4. Key Measures
+
+---
+
+## 4. Key Power BI Measures
+
 ### Victim Count:
 - Calculates total victims (Killed, Wounded, Kidnapped) based on slicer selections for Organization and Casualty Type.
 - DAX Logic:
@@ -97,14 +109,18 @@ SWITCH(
 
 ### Incident Count:
 Following the same DAX logic, counts distinct incidents filtered by Organization and Casualty Type slicers.
-________________________________________
-## 5. Relationships and Cross-Filtering
+
+---
+
+## 5. Relationships and Cross-Filtering in the Dashboard
+
 ### Bridge Table Role:
 Addresses many-to-many relationships between organizations and casualty types, allowing mutual cross-filtering across dimension tables.
 
 <img align="left" width="400" height="300"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Images/Data model.png"/> 
 
 ### Configuration:
+
 #### Relationships:
    - Bridge Table → Organization (Many-to-One)
    - Bridge Table → Type Casualty (Many-to-One)
@@ -118,25 +134,31 @@ Addresses many-to-many relationships between organizations and casualty types, a
 ---
 
 ## 6. Assumptions & Limitations
+
 ### Assumptions:
 1.	Incident IDs in the primary table are unique.
 2.	Missing values (e.g., blank dates, missing Region/Province names) were addressed using reverse geocoding (Python) and manual adjustments in Power Query.
+   
 ### Limitations:
 1.	Performance: Complex measures may reduce responsiveness with larger datasets.
 2.	Geographic Completeness: Some province-level data relies on approximate latitude/longitude or manual corrections.
-________________________________________
-## 7. Future Enhancements
+
+---
+
+## 7. Future Enhancements for the Dashboard
+
 ### Performance Optimization:
 Streamline DAX measures and SWITCH statements.
 ### Additional Filters:
 Add filters for Actor Type, Actor Name, and Actor Motive.
-________________________________________
+
+---
+
 ## 8. Appendix
 -	M code for handling missing data, name standardization, and auxiliary table joins
 - DAX code for dynamic measures and visualization titles
 - Python code for reverse geocoding
 - Aid worker security database codebook, published by Humanitarian Outcomes in 2021
-- QGIS map visualization (Aid Worker Security Incidents - East Mediterranean Humanitarian Corridor 2024), offering additional insights into security incidents affecting humanitarian aid workers (killed, kidnapped, or wounded), analyzed by 'means of attack' and 'functional location' within provinces
 
 
 _Note: The data points indicating incident locations are approximate rather than exact, due to the imputation of missing values in the latitude and longitude columns._
