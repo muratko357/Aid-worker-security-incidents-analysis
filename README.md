@@ -115,7 +115,6 @@ Addresses many-to-many relationships between organizations and casualty types, a
 
  #### Filter Direction:
    - Single-direction filters for dimension tables; bidirectional filters between the Bridge Table and Primary Table for seamless slicer functionality.
-
  <br clear="left"/>
 
 ---
@@ -139,13 +138,14 @@ Streamline DAX measures and SWITCH statements.
 ### Additional Filters:
 Add filters for Actor Type, Actor Name, and Actor Motive.
 
+---
 
-## 9. Conclusion
+## 8. Conclusion
 The products of this project—Power BI dashboard and QGIS map visualization—deliver actionable insights into security risks, enabling humanitarian organizations to enhance resource allocation, risk assessment, and policy development. By integrating data cleaning, modeling, and geospatial tools, the project highlights the potential of advanced data analysis and GIS in addressing complex humanitarian challenges. It serves as a scalable blueprint for future analyses and a practical guide for analysts aiming to leverage advanced data and GIS techniques for impactful decision-making and reporting.
 
 ---
 
-## 10. Appendix
+## 9. Appendix
 -	M code for handling missing data, name standardization, and auxiliary table joins
 - DAX code for dynamic measures and visualization titles
 - Python code for reverse geocoding
