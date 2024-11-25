@@ -3,13 +3,9 @@
 
 This project aims to analyze security incidents involving humanitarian aid workers, delivering actionable insights into incident patterns, victim demographics, and organizational involvement. Leveraging advanced data modeling, geospatial analysis, and interactive dashboards, the project empowers security managers and analysts in the humanitarian sector to make informed strategic and operational decisions. The products involve a Power BI dashboard with 2 pages and a QGIS map visualization (pdf). 
 
-<img align="left" width="500" height="281"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents global overview.png"/> 
+<img align="left" width="461" height="259"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents global overview.png"/> 
   
-<br clear="left"/>
-
-<br clear="left"/>
-
-<img align="left" width="500" height="281"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents EM view.png"/> 
+<img align="left" width="461" height="259"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents EM view.png"/> 
 <br clear="left"/>
 <small style="color:gray; font-size: 0.8em;"><em>Screenshots: Power BI dashboard pages: global overview and region view</em></small>
 <br clear="left"/>
