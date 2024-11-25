@@ -60,8 +60,8 @@ Key Columns:
 ## 3. Maps
 
 ### Power BI Maps for Global and Reginal Analyses
--	Utilizes Power BI's Bing Maps and a custom shape map created for provincial-level insights within the East Mediterranean Humanitarian Corridor.
--	Data points for bubble maps are locations identified by latitude and longitude, with bubble size and color representing victim counts. The regional shape map is also colored by victim counts.
+-	Utilizes Power BI's Bing Maps for global and regional analysis and a custom shape map created for specific insights within the East Mediterranean Humanitarian Corridor.
+-	Bubble maps visualize incidents based on latitude and longitude, with bubble size and color representing victim counts. The shape map for the East Mediterranean area is also colored by victim counts.
 
 ### QGIS Map Visualisation for Regional Analysis
 -	Utilizes the shape map for both country and provincial-level insights within the East Mediterranean Humanitarian Corridor.
@@ -81,7 +81,7 @@ Key Columns:
 6.	Created symbols to represent data points and adjusted the map for the print layout in QGIS.
 
 ### Challenges:
--	Name Standardization: Manual adjustments were required for inconsistent naming (e.g., "Ar-Raqqah" vs. "Ar Raqqah").
+-	Name Standardization: Manual adjustments were required to address inconsistencies (e.g., 'Ar-Raqqah' vs. 'Ar Raqqah'), ensuring accurate matching with the dataset.
 -	Projection Compatibility: Re-projected shapefiles to EPSG:4326 (WGS 84) for consistent integration.
 
 ---
@@ -90,22 +90,7 @@ Key Columns:
 
 ### Victim Count:
 - Calculates total victims (Killed, Wounded, Kidnapped) based on slicer selections for Organization and Casualty Type.
-- DAX Logic:
-
- ```sql
-// Sample Measure Logic
-Victim Count = 
-VAR selectedOrg = SELECTEDVALUE('Bridge Table'[Organization], "All")
-VAR selectedCas = SELECTEDVALUE('Bridge Table'[Casualty], "All")
-RETURN
-SWITCH(
-    TRUE(),
-    selectedOrg = "ICRC" && selectedCas = "Killed", 
-        CALCULATE(SUM('Data[Total killed]), 'Data'[ICRC] > 0), 
- // Additional conditions as per code implementation
-    CALCULATE(SUM('Data'[Total affected]))
-)
- ```
+Full DAX logic is provided in the appendix.
 
 ### Incident Count:
 Following the same DAX logic, counts distinct incidents filtered by Organization and Casualty Type slicers.
@@ -117,17 +102,19 @@ Following the same DAX logic, counts distinct incidents filtered by Organization
 ### Bridge Table Role:
 Addresses many-to-many relationships between organizations and casualty types, allowing mutual cross-filtering across dimension tables.
 
-<img align="left" width="400" height="300"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Images/Data model.png"/> 
+<img align="left" width="400" height="300"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Images/Data model.png"/>
+<br clear="left"/>
+<small style="color:gray; font-size: 0.8em;"><em>Screenshot: Data model illustration</em></small> 
 
 ### Configuration:
 
 #### Relationships:
    - Bridge Table → Organization (Many-to-One)
    - Bridge Table → Type Casualty (Many-to-One)
-   -	Bridge Table ↔ Data Table (Both Directions)
+   -	Bridge Table ↔ Primary Table (Both Directions)
 
  #### Filter Direction:
-   - Single-direction filters for dimension tables; bidirectional filters between the Bridge Table and Data Table for seamless slicer functionality.
+   - Single-direction filters for dimension tables; bidirectional filters between the Bridge Table and Primary Table for seamless slicer functionality.
 
  <br clear="left"/>
 
@@ -152,9 +139,13 @@ Streamline DAX measures and SWITCH statements.
 ### Additional Filters:
 Add filters for Actor Type, Actor Name, and Actor Motive.
 
+
+## 9. Conclusion
+The products of this project—Power BI dashboard and QGIS map visualization—deliver actionable insights into security risks, enabling humanitarian organizations to enhance resource allocation, risk assessment, and policy development. By integrating data cleaning, modeling, and geospatial tools, the project highlights the potential of advanced data analysis and GIS in addressing complex humanitarian challenges. It serves as a scalable blueprint for future analyses and a practical guide for analysts aiming to leverage advanced data and GIS techniques for impactful decision-making and reporting.
+
 ---
 
-## 8. Appendix
+## 10. Appendix
 -	M code for handling missing data, name standardization, and auxiliary table joins
 - DAX code for dynamic measures and visualization titles
 - Python code for reverse geocoding
