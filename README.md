@@ -3,11 +3,19 @@
 
 This project aims to enhance the safety of humanitarian aid workers by analyzing security incidents in which they were killed, wounded, or kidnapped from 1997 to 2024. Deliverables include a two-page interactive Power BI dashboard and a complementary QGIS map visualization (PNG). These tools provide actionable insights into incident patterns, victim demographics, organizational involvement, and geographic hotspots. By integrating advanced data modeling, geospatial analysis, and dynamic visualizations, the project empowers security managers, analysts, and humanitarian organizations to make informed strategic and operational decisions in high-risk areas.
 
-<img align="left" width="461" height="259"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents global overview.png"/> 
-  
-<img align="left" width="461" height="259"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/Aid workers security incidents EM view.png"/> 
-<br clear="left"/>
-<small style="color:gray; font-size: 0.8em;"><em>Screenshots: Power BI dashboard pages: global overview and region view</em></small>
+<div align="center">
+  <img width="700" height="394" alt="Aid worker security dashboard" src="Images/Aid workers security incidents global overview.png"/>
+  <br clear="left"/>
+  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: Global overview</em></small>
+</div> 
+
+<br>
+
+<div align="center">
+  <img width="700" height="394" alt="Aid worker security dashboard" src="Images/Aid workers security incidents EM view.png"/>
+  <br clear="left"/>
+  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: EM province-level view</em></small>
+</div>
 <br clear="left"/>
 
 ### Interactive Pages in Power BI Dashboard:
@@ -65,9 +73,11 @@ Key Columns:
 -	Utilizes the shape map for both country and provincial-level insights within the East Mediterranean Humanitarian Corridor.
 -	Data points in the shape map are locations identified by latitude and longitude, with symbols representing attack types.
 
-<img align="left" width="600" height="424"  alt="Aid workers security incidents dashboard" style="margin: 0 10px 0 0;" src="Images/QGIS Map-East Mediterranean Humanitarian Corridor.png"/> 
-<br clear="left"/>
-<small style="color:gray; font-size: 0.8em;"><em>Screenshot: QGIS Map visualization</em></small>
+<div align="center">
+  <img width="700" height="495" alt="Aid worker security dashboard" src="Images/QGIS Map-East Mediterranean Humanitarian Corridor.png"/>
+  <br clear="left"/>
+  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: QGIS Map visualization</em></small>
+</div> 
 <br clear="left"/>
 
 ### Creation Process:
@@ -100,9 +110,12 @@ Following the same DAX logic, counts distinct incidents filtered by Organization
 ### Bridge Table Role:
 Addresses many-to-many relationships between organizations and casualty types, allowing mutual cross-filtering across dimension tables.
 
-<img align="left" width="400" height="300"  alt="Inventory Dashboard" style="margin: 0 10px 0 0;" src="Images/Data model.png"/>
+<div align="center">
+  <img width="700" height="495" alt="Aid worker security dashboard" src="Images/Data model.png"/>
+  <br clear="left"/>
+  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: Data model illustration</em></small>
+</div> 
 <br clear="left"/>
-<small style="color:gray; font-size: 0.8em;"><em>Screenshot: Data model illustration</em></small> 
 
 ### Configuration:
 
