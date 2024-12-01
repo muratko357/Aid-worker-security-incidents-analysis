@@ -1,6 +1,6 @@
 let
     // Step 1: Import Raw Data
-    Source = Csv.Document(File.Contents("C:\Users\murat\Documents\Projects\AidWorkerySecurity\security_incidents_2024-11-22.csv"),[Delimiter=",", Columns=41, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents("C:\Users\murat\Documents\Projects\AidWorkerySecurity\security_incidents_2024-12-01.csv"),[Delimiter=",", Columns=41, QuoteStyle=QuoteStyle.Csv]),
     #"Promoted Headers" = Table.PromoteHeaders(#"Source", [PromoteAllScalars=true]),
     #"Removed Top Rows" = Table.Skip(#"Promoted Headers",1),
 
@@ -20,25 +20,6 @@ let
     else if [Country] = "Occupied Palestinian Territories" then "Palestine"
     else if [Country] = "Iran, Islamic Republic of" then "Iran"
     else [Country], Replacer.ReplaceValue, {"Country"}),
-
-    #"Standardized Actor Names" = Table.ReplaceValue(#"Standardized Countries", each [Actor name], 
-    each if [Actor name] = "Unkown" then "Unknown"
-    else if [Actor name] = "Unknwon" then "Unknown"  
-    else if [Actor name] = "Uknown" then "Unknown"
-    else if [Actor name] =  "Non applicable" then "Not applicable"
-    else if [Actor name] = "Non applicable" then "Not applicable"
-    else if [Actor name] = "Israeli Defense Forces (IDF)" then "Israel Defense Forces (IDF)"
-    else if [Actor name] = "Israel Defense Forces" then "Israel Defense Forces (IDF)"
-    else if [Actor name] = "Criminals" then "Criminal"
-    else if [Actor name] = "Civilians" then "Civilian"
-    else if [Actor name] = "IDPs" then "IDP"
-    else if [Actor name] = "Community members" then "Community member"
-    else if [Actor name] = "Kachin Independence Army" then "Kachin Independence Army (KIA)"
-    else if [Actor name] = "Rapid Support Forces" then "Rapid Support Forces (RSF)"
-    else if [Actor name] = "Security guards" then "Security guard"
-    else if [Actor name] = "Al-Itihaad al-Islami" then "Al-Itihaad al-Islamiya"
-    else if [Actor name] = "Al-Ittihad al-Islami" then "Al-Ittihaad al-Islamiya"
-    else [Actor name], Replacer.ReplaceValue,{"Actor name"}),
 
     #"Standardized Verified Values" = Table.ReplaceValue(#"Standardized Actor Names", each [Verified], 
     each if [Verified] = "Pen" then "Pending"
@@ -78,16 +59,9 @@ let
     #"Added Final Region" = Table.AddColumn(#"Added Final Lon", "Final Region", each if ([Region] = null or [Region] = "") then [Region2] else [Region]),
     
     #"Standardized Region Names" = Table.ReplaceValue(#"Added Final Region", each [Final Region], 
-    each if [Incident ID] = 2216 then "Aleppo"
-    else if [Incident ID] = 2356 then "Hamah"
-    else if [Incident ID] = 3328 then "Idlib"
-    else if [Country] = "Israel" and ([District] = "Sha'ar HaNegev" or [District] = "Southern" or [District] = "Eshkol") then "HaDarom"
+    each if [Country] = "Israel" and ([District] = "Sha'ar HaNegev" or [District] = "Southern" or [District] = "Eshkol") then "HaDarom"
     else if [Country] = "Palestine" and [Final Region] = "Judea and Samaria" then "West Bank"
     else if [Country] = "Palestine" and [City2] = "Gaza" then "Gaza"
-    else if [Incident ID] = 3352 then "West Bank" 
-    else if [Incident ID] = 4086 then "Gaza"
-    else if [Incident ID] = 2421 then "Gaza" 
-    else if [Incident ID] = 4283 then "West Bank"
     else [Final Region], Replacer.ReplaceValue, {"Final Region"}),
 
     // Step 11: Additional Replacements for Region and City
@@ -96,17 +70,7 @@ let
     else if [Final Region] = "Al-Hasaka" then "Al Hasakah"
     else if [Final Region] = "Al-Hasakah" then "Al Hasakah"
     else if [Final Region] = "Homs" then "Hims"
-    else if [Final Region] = "Homs Governorate" then "Hims"
-    else if [Final Region] = "Deir ez-Zor" then "Dayr Az Zawr"
-    else if [Final Region] = "Hama" then "Hamah"
-    else if [Final Region] = "Hama Governorate" then "Hamah"  
-    else if [Final Region] = "Ar-Raqqah" then "Ar Raqqah"
-    else if [Final Region] = "Raqqa" then "Ar Raqqah"
-    else if [Final Region] = "Daraa" then "Dar'a"
-    else if [Final Region] = "Idleb" then "Idlib"
-    else if [Final Region] = "Damascus Governorate" then "Damascus"
-    else if [Final Region] = "Latakia" then "Lattakia"    
-    else if [Final Region] = "Gaza Strip" then "Gaza"
+    ......
     else [Final Region], Replacer.ReplaceValue, {"Final Region"}),
 
     #"Refined city2" = Table.ReplaceValue(#"Standardized Region Names2", each [City2], each if [Incident ID] = 2216 
@@ -114,39 +78,12 @@ let
     
     // Step 12: Correct Latitues
     #"Refined Latitute" = Table.ReplaceValue(#"Refined city2", each [Final Lat], 
-    each if [Incident ID] = 2216 then 36.2021 
-    else if [Incident ID] = 2590 then 35.37 
-    else if [Incident ID] = 1699 then 33.541 
-    else if [Incident ID] = 3328 then 35.63 
-    else if [Incident ID] = 1939 then 36.289
-    else if [Incident ID] = 3739 then 34.47
-    else if [Incident ID] = 3774 then 6.56
-    else if [Incident ID] = 3954 then 31.529225223421967
-    else if [Incident ID] = 4033 then 31.502
-    else if [Incident ID] = 4046 then 31.505
-    else if [Incident ID] = 4047 then 31.5
-    else if [Incident ID] = 4072 then 31.51
-    else if [Incident ID] = 4150 then 31.31
+    each if [Incident ID] = .....
     else [Final Lat], Replacer.ReplaceValue, {"Final Lat"}),
     
     // Step 12: Correct Longitude
     #"Refined Longitude" = Table.ReplaceValue(#"Refined Latitute", each [Final Lon], 
-    each if [Incident ID] = 2216 then 37.1343 
-    else if [Incident ID] = 2590 then 36.69 
-    else if [Incident ID] = 1699 then 35.396 
-    else if [Incident ID] = 3328 then 36.46 
-    else if [Incident ID] = 1939 then 36.719 
-    else if [Incident ID] = 2166 then 37.054
-    else if [Incident ID] = 2239 then 36.06 
-    else if [Incident ID] = 2232 then 37.12
-    else if [Incident ID] = 3739 then 69.12
-    else if [Incident ID] = 3774 then 32.69
-    else if [Incident ID] = 3954 then 34.46249785118469
-    else if [Incident ID] = 4033 then 34.44
-    else if [Incident ID] = 4046 then 34.451
-    else if [Incident ID] = 4047 then 34.45
-    else if [Incident ID] = 4072 then 34.441
-    else if [Incident ID] = 4150 then 34.24 
+    each if [Incident ID] = ......
     else [Final Lon], Replacer.ReplaceValue, {"Final Lon"}),
 
     // Step 14: Final Cleanup
