@@ -2,7 +2,7 @@
 ## 1. Project Overview
 This project enhances the safety of humanitarian aid workers by analyzing security incidents where they were killed, wounded, or kidnapped from 1997 to 2024. Deliverables include:
 
-- A three-page interactive Power BI dashboard.
+- A three-page interactive **[Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiMmRkZjRkZGQtMzQ5ZS00MDI0LTljYmYtMjJiOTgwMDhmZGU0IiwidCI6IjVlNmFlYmFjLWQ1OGItNGIwYi1iMmE2LTY1YTdjYWMxMGM0NSIsImMiOjl9)** hosted on Power BI Server.
 - A complementary QGIS map visualization (PNG).
 
 These tools provide actionable insights into incident patterns, victim demographics, organizational involvement, and geographic hotspots. By integrating advanced data modeling, geospatial analysis, and dynamic visualizations, the project empowers security managers and humanitarian organizations to make informed strategic and operational decisions in high-risk areas.
@@ -96,6 +96,8 @@ The visualizations can be tailored to specific stakeholder needs, including addi
 This project delivers actionable tools to enhance the safety of humanitarian aid workers in high-risk areas. The Power BI dashboard offers interactive, data-driven insights into incident types and trends, victim demographics, and geographic hotspots, while the QGIS visualizations provide detailed static maps for reporting and presentations. These tools equip security managers and humanitarian organizations to allocate resources more effectively, anticipate risks, and improve operational planning.
 
 By integrating advanced geospatial analysis with dynamic visualization techniques, the project creates a foundation for broader applications, such as monitoring emerging threats, evaluating the effectiveness of security policies, and guiding long-term strategies. Future partnerships with humanitarian organizations and integration with broader datasets could further amplify the project's impact, enabling more comprehensive and informed decision-making across the humanitarian sector.
+
+Explore the full **[Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiMmRkZjRkZGQtMzQ5ZS00MDI0LTljYmYtMjJiOTgwMDhmZGU0IiwidCI6IjVlNmFlYmFjLWQ1OGItNGIwYi1iMmE2LTY1YTdjYWMxMGM0NSIsImMiOjl9)** for a detailed view of the results and insights.
 
 ## 8. References
 - Aid Worker Security Database. Humanitarian Outcomes. Accessed from https://aidworkersecurity.org, November 2024.
