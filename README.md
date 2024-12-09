@@ -1,166 +1,112 @@
-# Mapping and Analyzing Security Incidents to Enhance the Safety of Humanitarian Aid Workers in High-Risk Areas: GIS and Dashboard Insights for Security Managers
+# Mapping and Analyzing Security Incidents to Enhance the Safety of Humanitarian Aid Workers in High-Risk Areas
 ## 1. Project Overview
+This project enhances the safety of humanitarian aid workers by analyzing security incidents where they were killed, wounded, or kidnapped from 1997 to 2024. Deliverables include:
 
-This project aims to enhance the safety of humanitarian aid workers by analyzing security incidents in which they were killed, wounded, or kidnapped from 1997 to 2024. Deliverables include a two-page interactive Power BI dashboard and a complementary QGIS map visualization (PNG). These tools provide actionable insights into incident patterns, victim demographics, organizational involvement, and geographic hotspots. By integrating advanced data modeling, geospatial analysis, and dynamic visualizations, the project empowers security managers, analysts, and humanitarian organizations to make informed strategic and operational decisions in high-risk areas.
+- A three-page interactive Power BI dashboard.
+- A complementary QGIS map visualization (PNG).
 
-<div align="center">
-  <img width="700" height="394" alt="Aid worker security dashboard" src="Images/Aid workers security incidents global overview.png"/>
-  <br clear="left"/>
-  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: Global overview</em></small>
-</div> 
+These tools provide actionable insights into incident patterns, victim demographics, organizational involvement, and geographic hotspots. By integrating advanced data modeling, geospatial analysis, and dynamic visualizations, the project empowers security managers and humanitarian organizations to make informed strategic and operational decisions in high-risk areas.
 
-<br>
+Interactive Dashboard Pages:
 
-<div align="center">
-  <img width="700" height="394" alt="Aid worker security dashboard" src="Images/Aid workers security incidents EM view.png"/>
-  <br clear="left"/>
-  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: EM province-level view</em></small>
-</div>
-<br clear="left"/>
+- Global Overview (1997–2024): Displays global trends with heatmaps and aggregated victim counts.
+- East Mediterranean Humanitarian Corridor (2012–2024): Offers detailed insights into provincial-level incidents using custom maps.
+- East Mediterranean Humanitarian Corridor - 2024: Visualizes means of attack and locations using the icon-map plugin.
 
-### Interactive Pages in Power BI Dashboard:
-1.	Global Overview (1997–2024): Visualizes global trends using heatmaps and aggregated victim counts.
-2.	East Mediterranean Humanitarian Corridor (2012–2024): Delivers detailed insights into provincial-level incidents using custom maps.
+![Global Dashboard Overview](Images/Aid%20workers%20security%20incidents%20global%20overview.png)
 
-### Data Sources:
+*Figure 1: Power BI Dashboard Global View.*
 
-**Primary Dataset:**
-_security_incidents_2024-11-22.csv_ contains detailed records of security incidents, including victim counts and organizational affiliations. The data is sourced from Humanitarian Outcomes' Aid Worker Security Database (aidworkersecurity.org).
+## 2. Data Sources
+Incident Data:
+The primary dataset, security_incidents_2024-11-22.csv, contains detailed records sourced from the Aid Worker Security Database by Humanitarian Outcomes. Fields include victim counts, organizational affiliations, attack contexts, and geographic details.
 
-**Geographic Data:**
-Shapefiles for Israel, Palestine, Lebanon, and Syria were downloaded from GADM (gadm.org), standardized, merged, and converted into the TopoJSON format for Power BI integration.
+Geographic Data:
+Shapefiles for Israel, Palestine, Lebanon, and Syria were sourced from GADM (gadm.org), standardized, and merged. These shapefiles were converted to TopoJSON and GeoJSON formats for seamless integration with Power BI.
 
-### DAX Measures:
--	Victim Count: Total victims by type.
--	Incident Count: Total incidents by type.
--	Dynamic Map Title: Adapts titles based on slicer selections.
-
----
-
-## 2. Data Model
-
-### Primary Table:
+## 3. Data Model
+### Primary Table
 Name: security_incidents_2024-11-22
 Key Columns:
--	Incident ID
--	Date Fields (Year, Month, Day)
--	Victim Counts (e.g., Killed, Wounded, Kidnapped) by Organizational Affiliation and Gender
--	Means of Attack, Attack Context, and Location
--	Geographic Details (Country, Region/Province, City)
--	Latitude/Longitude
--	Details Text for incident descriptions
 
-### Dimension Tables:
+- Incident ID
+- Date (Year, Month, Day)
+- Victim Counts by Type, Organizational Affiliation, and Gender
+- Means of Attack, Context, and Location
+- Geographic Details (Country, Region, City, Latitude/Longitude)
+- Incident Descriptions
 
-#### Organization: 
-- Lists unique organization names for filtering incidents by humanitarian agencies and actors.
-#### Type Casualty: 
-- Represents casualty types (Killed, Wounded, Kidnapped) for cross-filtering.
-#### Bridge Table:
-- Links the primary table to dimension tables using composite keys (Incident ID, Organization ID, and Casualty ID). Enables accurate cross-filtering.
-#### Calendar Table:
-- Supports temporal analysis with calculated fields for Year, Month, and Week Number.
+### Dimension Tables
+- Organization: Enables filtering by humanitarian agencies.
+- Type Casualty: Filters incidents by casualty types (Killed, Wounded, Kidnapped).
+- Bridge Table: Resolves many-to-many relationships between primary and dimension tables.
+- Calendar Table: Supports temporal analysis with fields for Year, Month, and Week.
 
----
+## 4. Maps
+### Power BI Maps
+#### Azure/Bing Map
+- Azure Map: Serves as a heatmap to visualize the concentration of victim counts in geographic locations based on latitude and longitude information.
+- Bing Map: Used as an alternative for public sharing of the dashboard via Power BI server, ensuring accessibility and compliance with licensing requirements.
+#### Shape Map
+- Highlights areas with higher victim counts, enabling interactive filtering between visuals. This visualization is particularly effective for identifying regional patterns and trends.
 
-## 3. Maps
+![East Mediterranean Dashboard](Images/Aid%20workers%20security%20incidents%20EM%20view.png)
 
-### Power BI Maps for Global and Reginal Analyses
--	Utilizes Power BI's Bing Maps for global and regional analysis and a custom shape map created for specific insights within the East Mediterranean Humanitarian Corridor.
--	Bubble maps visualize incidents based on latitude and longitude, with bubble size and color representing victim counts. The shape map for the East Mediterranean area is also colored by victim counts.
+*Figure 2: Power BI Dashboard East Mediterranean Humanitarian Corridor View with Shape Map.*
 
-### QGIS Map Visualisation for Regional Analysis
--	Utilizes the shape map for both country and provincial-level insights within the East Mediterranean Humanitarian Corridor.
--	Data points in the shape map are locations identified by latitude and longitude, with symbols representing attack types.
+#### Icon-Map Plugin
+- Combines interactivity with a first-glance overview of attack types. Customized icons represent different means of attack and their geographic distribution, providing actionable insights for operational planning.
 
-<div align="center">
-  <img width="700" height="495" alt="Aid worker security dashboard" src="Images/QGIS Map-East Mediterranean Humanitarian Corridor.png"/>
-  <br clear="left"/>
-  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: QGIS Map visualization</em></small>
-</div> 
-<br clear="left"/>
+![East Mediterranean Dashboard-IconMap](Images/Aid%20workers%20security%20incidents%20EM%202024%20icon%20map.png)
 
-### Creation Process:
-1.	Standardized shapefiles for individual countries using QGIS. 
-2. Merged shapefiles into a single dataset. 
-3. Converted the merged shapefile to TopoJSON format using MapShaper for the Power BI dashboard.
-4. Standardized province names to ensure alignment with incident data.
-5.	Merged the final shapefile with the incidents dataset using QGIS.
-6.	Created symbols to represent data points and adjusted the map for the print layout in QGIS.
+*Figure 3: Power BI Dashboard East Mediterranean Humanitarian Corridor 2024 with Icon Map.*
 
-### Challenges:
--	Name Standardization: Manual adjustments were required to address inconsistencies (e.g., "Deir ez-Zor" → "Dayr Az Zawr"), ensuring accurate matching with the dataset.
--	Projection Compatibility: Re-projected shapefiles to EPSG:4326 (WGS 84) for consistent integration.
+### QGIS and Data Preparation
+QGIS was used to preprocess and standardize geographic data for the East Mediterranean Humanitarian Corridor. The shapefiles were:
 
----
+- Merged and aligned with incident data.
+- Converted into TopoJSON and GeoJSON formats for seamless integration with Power BI.
+- Used to design static print layouts for presentation needs, complementing the interactive Power BI dashboards.
 
-## 4. Key Power BI Measures
+![QGIS-map](Images/QGIS%20Map-East%20Mediterranean%20Humanitarian%20Corridor.png)
 
-### Victim Count:
-- Calculates total victims (Killed, Wounded, Kidnapped) based on slicer selections for Organization and Casualty Type.
-Full DAX logic is provided in the appendix.
+*Figure 4: QGIS print layout.*
 
-### Incident Count:
-Following the same DAX logic, counts distinct incidents filtered by Organization and Casualty Type slicers.
+#### Challenges Overcome:
+- Name Standardization: Adjusted province names (e.g., "Deir ez-Zor" → "Dayr Az Zawr").
+- Projection Compatibility: Re-projected shapefiles to EPSG:4326 for consistent integration.
 
----
+## 5. Assumptions & Limitations
+### Assumptions
+- Incident IDs are unique.
+- Missing geographic values were filled using reverse geocoding and manual adjustments.
+### Limitations
+- Geographic completeness: Some regions rely on approximate coordinates.
+- Data reliability: Incident data may be incomplete due to underreporting or discrepancies in sources, particularly in conflict zones where data collection is challenging.
 
-## 5. Relationships and Cross-Filtering in the Dashboard
+## 6. Future Enhancements
+### Customizable Maps
+The visualizations can be tailored to specific stakeholder needs, including additional geographic regions or filtering criteria.
 
-### Bridge Table Role:
-Addresses many-to-many relationships between organizations and casualty types, allowing mutual cross-filtering across dimension tables.
+### Partnerships
+- Collaboration with humanitarian organizations can improve the project’s accuracy and utility through data validation and additional contributions. 
+- Expanding the dataset to include incidents where humanitarian aid workers were not directly affected could provide a broader context, uncovering patterns and factors contributing to overall security risks in high-risk areas. 
 
-<div align="center">
-  <img width="700" height="495" alt="Aid worker security dashboard" src="Images/Data model.png"/>
-  <br clear="left"/>
-  <small style="color:gray; font-size: 0.8em;"><em>Screenshot: Data model illustration</em></small>
-</div> 
-<br clear="left"/>
+## 7. Conclusion
+This project delivers actionable tools to enhance the safety of humanitarian aid workers in high-risk areas. The Power BI dashboard offers interactive, data-driven insights into incident types and trends, victim demographics, and geographic hotspots, while the QGIS visualizations provide detailed static maps for reporting and presentations. These tools equip security managers and humanitarian organizations to allocate resources more effectively, anticipate risks, and improve operational planning.
 
-### Configuration:
+By integrating advanced geospatial analysis with dynamic visualization techniques, the project creates a foundation for broader applications, such as monitoring emerging threats, evaluating the effectiveness of security policies, and guiding long-term strategies. Future partnerships with humanitarian organizations and integration with broader datasets could further amplify the project's impact, enabling more comprehensive and informed decision-making across the humanitarian sector.
 
-#### Relationships:
-   - Bridge Table → Organization (Many-to-One)
-   - Bridge Table → Type Casualty (Many-to-One)
-   -	Bridge Table ↔ Primary Table (Both Directions)
-
- #### Filter Direction:
-   - Single-direction filters for dimension tables; bidirectional filters between the Bridge Table and Primary Table for seamless slicer functionality.
- <br clear="left"/>
-
----
-
-## 6. Assumptions & Limitations
-
-### Assumptions:
-1.	Incident IDs in the primary table are unique.
-2.	Missing values (e.g., blank dates, missing Region/Province names) were addressed using reverse geocoding (Python) and manual adjustments in Power Query.
-   
-### Limitations:
-1.	Performance: Complex measures may reduce responsiveness with larger datasets.
-2.	Geographic Completeness: Some province-level data relies on approximate latitude/longitude or manual corrections.
-
----
-
-## 7. Future Enhancements for the Dashboard
-
-### Performance Optimization:
-Streamline DAX measures and SWITCH statements.
-### Additional Filters:
-Add filters for Actor Type, Actor Name, and Actor Motive.
-
----
-
-## 8. Conclusion
-The products of this project—Power BI dashboard and QGIS map visualization—deliver actionable insights into security risks, enabling humanitarian organizations to enhance resource allocation, risk assessment, and policy development. By integrating data cleaning, modeling, and geospatial tools, the project highlights the potential of advanced data analysis and GIS in addressing complex humanitarian challenges. It serves as a scalable blueprint for future analyses and a practical guide for analysts aiming to leverage advanced data and GIS techniques for impactful decision-making and reporting.
-
----
+## 8. References
+- Aid Worker Security Database. Humanitarian Outcomes. Accessed from https://aidworkersecurity.org, November 2024.
+- Global Administrative Areas Database. GADM. Accessed from https://gadm.org, November 2024.
+- MapShaper. Accessed from https://mapshaper.org, November 2024.
+- Power BI. Microsoft Corporation. 
+- Icon Map - custom visual for Microsoft Power BI. James Dales. Accessed from https://www.icon-map.com, November 2024.
+- QGIS Geographic Information System. QGIS Association. Accessed from http://www.qgis.org, October 2024
 
 ## 9. Appendix
--	M code for handling missing data, name standardization, and auxiliary table joins
-- DAX code for dynamic measures and visualization titles
-- Python code for reverse geocoding
-- Aid worker security database codebook, published by Humanitarian Outcomes in 2021
-
-
-_Note: The data points indicating incident locations are approximate rather than exact, due to the imputation of missing values in the latitude and longitude columns._
+- M Code Logic: Handles missing data and name standardization.
+- DAX Logic: Powers dynamic measures and visualization interactivity.
+- Python Code: Used for reverse geocoding.
+- Aid Worker Security Database Codebook: Published by Humanitarian Outcomes, 2021.
