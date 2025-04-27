@@ -2,7 +2,7 @@
 ## 1. Project Overview
 This project enhances the safety of humanitarian aid workers by analyzing security incidents where they were killed, wounded, or kidnapped from 1997 to 2024. Deliverables include:
 
-- A three-page interactive **[Power BI Dashboard]([https://app.powerbi.com/view?r=eyJrIjoiMmRkZjRkZGQtMzQ5ZS00MDI0LTljYmYtMjJiOTgwMDhmZGU0IiwidCI6IjVlNmFlYmFjLWQ1OGItNGIwYi1iMmE2LTY1YTdjYWMxMGM0NSIsImMiOjl9](https://app.powerbi.com/view?r=eyJrIjoiZGFhYWZiZTMtM2FmMi00OTM3LWIzNGQtNGRhODQxMzc3NjZiIiwidCI6IjVlNmFlYmFjLWQ1OGItNGIwYi1iMmE2LTY1YTdjYWMxMGM0NSIsImMiOjl9))** hosted on Power BI Server.
+- A three-page interactive **[Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZGFhYWZiZTMtM2FmMi00OTM3LWIzNGQtNGRhODQxMzc3NjZiIiwidCI6IjVlNmFlYmFjLWQ1OGItNGIwYi1iMmE2LTY1YTdjYWMxMGM0NSIsImMiOjl9)** hosted on Power BI Server.
 - A complementary QGIS map visualization (PNG).
 
 These tools provide actionable insights into incident patterns, victim demographics, organizational involvement, and geographic hotspots. By integrating advanced data modeling, geospatial analysis, and dynamic visualizations, the project empowers security managers and humanitarian organizations to make informed strategic and operational decisions in high-risk areas.
