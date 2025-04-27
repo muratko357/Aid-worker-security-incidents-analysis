@@ -1,6 +1,6 @@
 # Mapping and Analyzing Security Incidents to Enhance the Safety of Humanitarian Aid Workers in High-Risk Areas
 ## 1. Project Overview
-This project enhances the safety of humanitarian aid workers by analyzing security incidents where they were killed, wounded, or kidnapped from 1997 to 2024. Deliverables include:
+This project enhances the safety of humanitarian aid workers by analyzing security incidents where they were killed, wounded, or kidnapped since 1997. Deliverables include:
 
 - A three-page interactive **[Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZGFhYWZiZTMtM2FmMi00OTM3LWIzNGQtNGRhODQxMzc3NjZiIiwidCI6IjVlNmFlYmFjLWQ1OGItNGIwYi1iMmE2LTY1YTdjYWMxMGM0NSIsImMiOjl9)** hosted on Power BI Server.
 - A complementary QGIS map visualization (PNG).
@@ -9,9 +9,9 @@ These tools provide actionable insights into incident patterns, victim demograph
 
 Interactive Dashboard Pages:
 
-- Global Overview (1997–2024): Displays global trends with heatmaps and aggregated victim counts.
-- East Mediterranean Humanitarian Corridor (2012–2024): Offers detailed insights into provincial-level incidents using custom maps.
-- East Mediterranean Humanitarian Corridor - 2024: Visualizes means of attack and locations using the icon-map plugin.
+- Global Overview (since 1997): Displays global trends with heatmaps and aggregated victim counts.
+- East Mediterranean Humanitarian Corridor (since 2012): Offers detailed insights into provincial-level incidents using custom maps.
+- East Mediterranean Humanitarian Corridor (since 2024): Visualizes means of attack and locations using the icon-map plugin.
 
 ![Global Dashboard Overview](Images/Aid%20workers%20security%20incidents%20global%20overview.png)
 
@@ -19,14 +19,14 @@ Interactive Dashboard Pages:
 
 ## 2. Data Sources
 Incident Data:
-The primary dataset, security_incidents_2024-11-22.csv, contains detailed records sourced from the Aid Worker Security Database by Humanitarian Outcomes. Fields include victim counts, organizational affiliations, attack contexts, and geographic details.
+The primary dataset contains detailed records sourced from the Aid Worker Security Database by Humanitarian Outcomes. Fields include victim counts, organizational affiliations, attack contexts, and geographic details.
 
 Geographic Data:
 Shapefiles for Israel, Palestine, Lebanon, and Syria were sourced from GADM (gadm.org), standardized, and merged. These shapefiles were converted to TopoJSON and GeoJSON formats for seamless integration with Power BI.
 
 ## 3. Data Model
 ### Primary Table
-Name: security_incidents_2024-11-22
+Name: security_incidents
 Key Columns:
 
 - Incident ID
