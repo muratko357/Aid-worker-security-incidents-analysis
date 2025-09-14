@@ -57,9 +57,6 @@ Key Columns:
 #### Icon-Map Plugin
 - Combines interactivity with a first-glance overview of attack types. Customized icons represent different means of attack and their geographic distribution, providing actionable insights for operational planning.
 
-![East Mediterranean Dashboard-IconMap](Images/Aid%20workers%20security%20incidents%20EM%202024%20icon%20map.png)
-
-*Figure 3: Power BI Dashboard East Mediterranean Humanitarian Corridor 2024 with Icon Map.*
 
 ### QGIS and Data Preparation
 QGIS was used to preprocess and standardize geographic data for the East Mediterranean Humanitarian Corridor. The shapefiles were:
