@@ -13,7 +13,7 @@ Interactive Dashboard Pages:
 - East Mediterranean Humanitarian Corridor (since 2012): Offers detailed insights into provincial-level incidents using custom maps.
 - East Mediterranean Humanitarian Corridor (since 2024): Visualizes means of attack and locations using the icon-map plugin.
 
-![Global Dashboard Overview](Images/Aid%20workers%20security%20incidents%20global%20overview.png)
+![Global Dashboard Overview](Images/Aid%20workers%20security%20incidents%20global%20overview2.png)
 
 *Figure 1: Power BI Dashboard Global View.*
 
